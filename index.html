@@ -52,7 +52,9 @@
   </head>
   <body>
     <header>
-      <nav class="navbar navbar-expand-lg bg-body-tertiary px-4 py-3">
+      <nav
+        class="navbar navbar-expand-lg bg-body-tertiary px-4 py-3 position-fixed start-0 end-0 top-0 z-3"
+      >
         <div class="container p-0">
           <div class="d-flex justify-content-between w-100">
             <div class="d-flex gap-2">
@@ -137,7 +139,7 @@
                     <p class="m-0 text-gray-500 fs-12px">TOTAL</p>
                     <p
                       id="total-contacts"
-                      class="m-0 text-gray-900 fw-bold fs-5 lh-28px"
+                      class="m-0 text-gray-900 fw-bold fs-5 lh-28px fs-sm-24px"
                     >
                       0
                     </p>
@@ -157,7 +159,7 @@
                     <p class="m-0 text-gray-500 fs-12px">FAVORITES</p>
                     <p
                       id="favorite-contacts"
-                      class="m-0 text-gray-900 fw-bold fs-5 lh-28px"
+                      class="m-0 text-gray-900 fw-bold fs-5 lh-28px fs-sm-24px"
                     >
                       0
                     </p>
@@ -177,7 +179,7 @@
                     <p class="m-0 text-gray-500 fs-12px">EMERGENCY</p>
                     <p
                       id="emergency-contacts"
-                      class="m-0 text-gray-900 fw-bold fs-5 lh-28px"
+                      class="m-0 text-gray-900 fw-bold fs-5 lh-28px fs-sm-24px"
                     >
                       0
                     </p>
@@ -191,10 +193,12 @@
               <div class="col-xl-8">
                 <div class="d-flex flex-column gap-3">
                   <div>
-                    <h2 class="fs-4 fw-bold lh-32px m-0">All Contacts</h2>
+                    <h2 class="fs-4 fw-bold lh-32px m-0 fs-sm-30px">
+                      All Contacts
+                    </h2>
                     <span class="text-gray-500 fs-14px"
                       >Manage and organize your
-                      <span id="manage-contact-quantity">0</span> contacts</span
+                      <span id="mg-contact-quantity">0</span> contacts</span
                     >
                   </div>
 
@@ -212,7 +216,7 @@
                     />
                   </div>
 
-                  <div id="contacts-viewport" class="row g-3">
+                  <div id="contacts-viewport" class="row g-3 flex-wrap">
                     <div class="col-sm-6 align-items-center px-2">
                       <div class="contact-card border border-gray-100 border-1">
                         <div class="contact-card-info bg-white rounded-3">
@@ -302,7 +306,7 @@
                             <a
                               title="Call"
                               href="tel:01125571903"
-                              class="call-action bg-emerald-50 border-0 icon-36 rounded-3 d-flex align-items-center justify-content-center"
+                              class="call-action bg-emerald-50 border-0 icon-sm-32 icon-36 rounded-3 d-flex align-items-center justify-content-center"
                             >
                               <i
                                 class="fa-solid fa-phone text-emerald-600 fs-14px"
@@ -374,7 +378,7 @@
                 </div>
               </div>
               <div class="col-xl-4">
-                <div class="contacts-type">
+                <div class="contacts-type position-sticky">
                   <div
                     class="favorite-contacts bg-white overflow-hidden mb-3 border-gray-100 border-1"
                   >
@@ -396,7 +400,7 @@
                     </div>
                     <div
                       id="favorites-links"
-                      class="d-flex flex-column gap-2 p-3"
+                      class="d-flex flex-column flex-sm-row flex-xl-column p-3 gap-2 flex-wrap"
                     >
                       <div
                         class="contact-link d-flex align-items-center justify-content-between gap-2 bg-gray-50 p-2 border-2 border-gray-100 p-2"
@@ -454,7 +458,7 @@
                     </div>
                     <div
                       id="emergency-links"
-                      class="d-flex flex-column gap-2 p-3"
+                      class="d-flex flex-column flex-sm-row flex-xl-column gap-2 flex-wrap p-3"
                     ></div>
                   </div>
                 </div>
@@ -482,6 +486,7 @@
             class="d-flex align-items-center justify-content-center flex-column mb-3"
           >
             <div
+              id="avatar-img"
               class="avatar rounded-circle d-flex align-items-center justify-content-center"
             >
               <i class="fa-solid fa-user fs-30px text-white"></i>
@@ -612,8 +617,9 @@
     <script src="./js/storage.js"></script>
     <script src="./js/actions.js"></script>
     <script src="./js/validation.js"></script>
-    <script src="./js/crud.js"></script>
     <script src="./js/script.js"></script>
+    <script src="./js/crud.js"></script>
+
     <script src="./js/toggles.js"></script>
   </body>
 </html>

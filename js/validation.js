@@ -9,7 +9,6 @@ function ValidateForm(contactToAdd) {
     }
   }
 
-
   if (
     CheckContactValidation(
       contactToAdd.fullName,
@@ -39,7 +38,7 @@ function CheckContactValidation(...data) {
     msgTitle = "Invalid Phone";
     msgText =
       "Please enter a valid Egyptian phone number (e.g., 01012345678 or +201012345678)";
-  } else if (isUsedPhoneNumber) {
+  } else if (isUsedPhoneNumber && !editMode) {
     msgTitle = "Duplicate Phone Number";
     msgText = `A contact with this phone number already exists: ${data[2]}`;
   } else if (!validEmail) {

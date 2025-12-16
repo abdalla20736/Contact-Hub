@@ -81,6 +81,9 @@
 .text-blue-600 {
   color: #155dfc;
 }
+.text-blue-700 {
+  color: #1d4ed8;
+}
 
 .text-blue-800 {
   color: #2c5282;
@@ -161,6 +164,10 @@
 .text-purple-600 {
   color: oklch(55.8% 0.288 302.321);
 }
+.text-purple-700 {
+  color: #6b21a8;
+}
+
 .text-violet-600 {
   color: #7c3aed;
 }
@@ -233,7 +240,9 @@
 .text-amber-600 {
   color: #d97706;
 }
-
+.text-amber-700 {
+  color: #b45309;
+}
 .bg-violet-50 {
   background-color: #f5f3ff;
 }
@@ -248,6 +257,7 @@
 .bg-purple-100 {
   background-color: #f3e8ff;
 }
+
 .bg-gray-50 {
   background-color: #f9fafb;
 }
@@ -288,6 +298,9 @@
 
 .bg-amber-50 {
   background-color: #fffbeb;
+}
+.bg-amber-100 {
+  background-color: #fef3c7;
 }
 .bg-amber-400 {
   background-color: #fbbf24;
@@ -518,6 +531,12 @@
 }
 
 @media screen and (min-width: 576px) {
+  .fs-sm-8px {
+    font-size: 8px !important;
+  }
+  .fs-sm-10px {
+    font-size: 10px !important;
+  }
   .fs-sm-12px {
     font-size: 12px !important;
   }
@@ -534,6 +553,9 @@
   }
   .fs-sm-26px {
     font-size: 26px !important;
+  }
+  .fs-sm-30px {
+    font-size: 30px !important;
   }
 
   .fs-sm-42px {
@@ -628,6 +650,10 @@
     width: 44px;
     height: 44px;
   }
+  .icon-sm-56 {
+    height: 56px;
+    width: 56px;
+  }
 }
 
 @media screen and (min-width: 768px) {
@@ -650,6 +676,12 @@
     font-size: 1rem !important;
   }
 
+  .fs-md-8px {
+    font-size: 8px !important;
+  }
+  .fs-md-10px {
+    font-size: 10px !important;
+  }
   .fs-md-12px {
     font-size: 12px !important;
   }
@@ -710,9 +742,17 @@
     height: 32px;
     width: 32px;
   }
+  .icon-md-36 {
+    height: 36px;
+    width: 36px;
+  }
   .icon-md-40 {
     height: 40px;
     width: 40px;
+  }
+  .icon-md-56 {
+    height: 56px;
+    width: 56px;
   }
 
   .grid-cols-md-1 {
@@ -788,6 +828,18 @@
 }
 
 @media screen and (min-width: 992px) {
+  .fs-lg-8px {
+    font-size: 8px !important;
+  }
+  .fs-lg-10px {
+    font-size: 10px !important;
+  }
+  .fs-lg-12px {
+    font-size: 12px !important;
+  }
+  .fs-lg-14px {
+    font-size: 14px !important;
+  }
   .fs-lg-18px {
     font-size: 18px !important;
   }
@@ -876,6 +928,10 @@
     height: 40px;
     width: 40px;
   }
+  .icon-lg-56 {
+    height: 56px;
+    width: 56px;
+  }
   .mb-lg-12px {
     margin-bottom: 12px !important;
   }
@@ -950,8 +1006,17 @@
 }
 
 @media screen and (min-width: 1200px) {
+  .fs-xl-8px {
+    font-size: 8px !important;
+  }
+  .fs-xl-10px {
+    font-size: 10px !important;
+  }
   .fs-xl-12px {
     font-size: 12px !important;
+  }
+  .fs-xl-14px {
+    font-size: 14px !important;
   }
   .fs-xl-26px {
     font-size: 26px;
@@ -981,7 +1046,7 @@
     font-size: 1.25rem;
   }
   .fs-xl-6 {
-    font-size: 1rem;
+    font-size: 1rem !important;
   }
   .mb-xl-12px {
     margin-bottom: 12px;
@@ -1064,5 +1129,9 @@
   .icon-xl-32 {
     width: 32px;
     height: 32px;
+  }
+  .icon-xl-56 {
+    height: 56px;
+    width: 56px;
   }
 }

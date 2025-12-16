@@ -6,8 +6,9 @@ const addContactForm = document.getElementById("add-contact-form");
 const favCheckbox = document.getElementById("favorite-checkbox");
 const emergencyCheckbox = document.getElementById("emergency-checkbox");
 const searchInput = document.getElementById("search-contact");
+const contactsHeaderQuantity = document.getElementById("mg-contact-quantity");
 const contactsViewPort = document.getElementById("contacts-viewport");
-const avatarInput = document.getElementById("avatarInput");
+const avatarImg = document.getElementById("avatar-img");
 const inputs = document.querySelectorAll(`form input, textarea, select`);
 const totalContactsQuantity = document.getElementById("total-contacts");
 const favoriteContactsQuantity = document.getElementById("favorite-contacts");
@@ -22,32 +23,43 @@ let validName = true;
 let validPhone = true;
 let isUsedPhoneNumber = false;
 let validEmail = true;
+let editMode = false;
+let currentContactIndex;
 
 RegisterEvents();
 LoadContactsFromLocalStorage();
+seedContacts();
 DisplayContacts(contacts);
 
 function RandomGradient() {
-  const rand = () => Math.floor(50 + Math.random() * 205);
-  const color1 = `rgb(0, 0, 255)`;
-  const color2 = `rgb(${rand()}, ${rand()}, ${rand()})`;
+  let r = Math.floor(80 + Math.random() * 140);
+  let g = Math.floor(80 + Math.random() * 140);
+  let b = Math.floor(80 + Math.random() * 140);
+
+  const color1 = `rgb(${r}, ${g}, ${b})`;
+
+  const color2 = `rgb(
+    ${Math.max(0, r - 60)},
+    ${Math.max(0, g - 60)},
+    ${Math.max(0, b - 60)}
+  )`;
 
   return `linear-gradient(to bottom right, ${color1}, ${color2})`;
 }
 
 function SaveContact() {
-  inputs.forEach((element) => {
-    console.log(element.value);
-  });
-
   var imageName;
   if (inputs[0].files.length > 0) {
     imageName = inputs[0].files[0].name;
   }
 
+  var existGradient =
+    contacts[currentContactIndex] === undefined
+      ? RandomGradient()
+      : contacts[currentContactIndex].gradient;
   var contact = {
     avatarInput: imageName,
-    gradient: RandomGradient(),
+    gradient: existGradient,
     fullName: inputs[1].value,
     telephone: inputs[2].value,
     email: inputs[3].value,
@@ -59,11 +71,15 @@ function SaveContact() {
   };
 
   if (ValidateForm(contact)) {
-    contacts.push(contact);
+    if (editMode) {
+      contacts[currentContactIndex] = contact;
+    } else {
+      contacts.push(contact);
+    }
     DisplayContacts(contacts);
     SaveContactsToLocalStorage();
+    ShowMessage();
     CloseForm();
-    ClearForm();
   }
 }
 
@@ -72,19 +88,6 @@ function ClearForm() {
 }
 
 function DisplayContacts(contacts) {
-  var staticContact = {
-    avatarInput: "meal-1.jpg",
-    gradient: RandomGradient(),
-    fullName: "ahmed",
-    telephone: "0102021548",
-    email: "email@email.com",
-    address: "address",
-    group: "Friends",
-    notes: "data",
-    isFavorite: false,
-    isEmergency: true,
-  };
-
   UpdateMainContacts(contacts);
   UpdateFavoriteContacts(contacts);
   UpdateEmergencyContacts(contacts);
@@ -114,19 +117,35 @@ function DeleteContact(index) {
 function UpdateMainContacts(displayedContacts) {
   var mainContacts = "";
 
-  for (let index = 0; index < displayedContacts.length; index++) {
-    mainContacts += UpdateContact(index);
+  if (displayedContacts.length > 0) {
+    for (let index = 0; index < displayedContacts.length; index++) {
+      mainContacts += UpdateContact(index);
+    }
+  } else {
+    mainContacts = `                <div id="contact-info" class="text-center">
+                    <div
+                      class="no-contacts bg-gray-100 mb-3 d-flex align-items-center justify-content-center rounded-3 mx-auto"
+                    >
+                      <i
+                        class="fa-solid fa-address-book fs-30px text-gray-300"
+                      ></i>
+                    </div>
+                    <p class="text-gray-500 m-0">No contacts found</p>
+                    <p class="text-gray-400 fs-14px mt-1">
+                      Click "Add Contact" to get started
+                    </p>
+                  </div>`;
   }
-
+  contactsHeaderQuantity.innerHTML = displayedContacts.length;
   totalContactsQuantity.innerHTML = displayedContacts.length;
   contactsViewPort.innerHTML = mainContacts;
 }
 
 function UpdateContact(index) {
   var contact = `
-                <div class="col-sm-6 align-items-center ">
-                      <div class="contact-card  border border-gray-100 border-1">
-                        <div class="contact-card-info bg-white rounded-3">
+                <div class="col-sm-6 align-items-center   ">
+                      <div class="contact-card  h-100  border border-gray-100 border-1">
+                        <div class="contact-card-info h-75 bg-white rounded-3 ">
                           <div class="d-flex gap-3">
                             <div class="position-relative icon-56 rounded-3">
                             ${
@@ -173,7 +192,9 @@ function UpdateContact(index) {
                             </div>
 
                             <div>
-                              <p class="m-0">${contacts[index].fullName}</p>
+                              <h3  class="fs-6 fw-600 ">${
+                                contacts[index].fullName
+                              }</h3>
                               <div class="d-flex gap-2">
                                 <div
                                   class="bg-blue-100 icon-24 rounded-3 d-flex align-items-center justify-content-center"
@@ -182,13 +203,15 @@ function UpdateContact(index) {
                                     class="fa-solid fa-phone text-blue-600 fs-10px"
                                   ></i>
                                 </div>
-                                <p class="m-0 text-gray-500">${
+                                <p class="m-0 text-gray-500 fs-14px">${
                                   contacts[index].telephone
                                 }</p>
                               </div>
                             </div>
                           </div>
-                          <div class="d-flex gap-2 align-items-center mt-2">
+                          ${
+                            contacts[index].email != ""
+                              ? `<div class="d-flex gap-2 align-items-center mt-2">
                             <div
                               class="icon-28 bg-violet-100 rounded-3 d-flex align-items-center justify-content-center"
                             >
@@ -199,25 +222,55 @@ function UpdateContact(index) {
                             <p class="m-0 text-gray-600 fs-14px">
                               ${contacts[index].email}
                             </p>
-                          </div>
-                          <div
+                          </div>`
+                              : ""
+                          }
+           
+                        
+                          ${
+                            contacts[index].address != ""
+                              ? `   <div
                             class="d-flex gap-2 align-items-center rounded-3 mt-2"
-                          >
-                            <div
+                          ><div
                               class="icon-28 bg-green-100 rounded-3 d-flex align-items-center justify-content-center"
                             >
                               <i
                                 class="fa-solid fa-location-dot text-green-600 fs-10px"
                               ></i>
                             </div>
-                            <p class="m-0 text-gray-600 fs-14px">
+                                     <p class="m-0 text-gray-600 fs-14px">
                               ${contacts[index].address}
                             </p>
-                          </div>
+                          </div>`
+                              : ""
+                          }
+                            
+                    
                           <div>
-                            <div class="badge bg-green-100 text-green-700">
+                          ${
+                            contacts[index].group == "family"
+                              ? `   <div class="badge bg-blue-100 text-blue-700">
+                              Family
+                            </div>`
+                              : contacts[index].group == "friends"
+                              ? `   <div class="badge bg-green-100 text-green-700">
                               Friends
-                            </div>
+                            </div>`
+                              : contacts[index].group == "work"
+                              ? `   <div class="badge bg-purple-100 text-purple-700">
+                              Work
+                            </div>`
+                              : contacts[index].group == "school"
+                              ? `   <div class="badge bg-amber-100 text-amber-700">
+                              School
+                            </div>`
+                              : contacts[index].group == "other"
+                              ? `   <div class="badge bg-gray-100 text-gray-700">
+                              Other
+                            </div>`
+                              : ""
+                          }
+                     
                             ${
                               contacts[index].isEmergency
                                 ? ` <div
@@ -238,21 +291,26 @@ function UpdateContact(index) {
                             <a
                               title="Call"
                               href="tel:${contacts[index].telephone}"
-                              class="call-action bg-emerald-50 border-0 icon-36 rounded-3 d-flex align-items-center justify-content-center"
+                              class="call-action bg-emerald-50 border-0 icon-sm-32 icon-36 icon-md-36  rounded-3 d-flex align-items-center justify-content-center"
                             >
                               <i
                                 class="fa-solid fa-phone text-emerald-600 fs-14px"
                               ></i>
                             </a>
+                            ${
+                              contacts[index].email != ""
+                                ? `
                             <a
                               title="Email"
                               href="mailto:${contacts[index].email}"
-                              class="email-action bg-violet-50 border-0 icon-36 rounded-3 d-flex align-items-center justify-content-center"
+                              class="email-action bg-violet-50 border-0 icon-sm-32 icon-36 icon-md-36  rounded-3 d-flex align-items-center justify-content-center"
                             >
                               <i
                                 class="fa-solid fa-envelope text-violet-600 fs-14px"
                               ></i>
-                            </a>
+                            </a>`
+                                : ""
+                            }
                           </div>
                           <div class=" d-flex gap-2">
                             <a
@@ -260,7 +318,7 @@ function UpdateContact(index) {
                               title="Favorite"
                               class="favorite-action  ${
                                 contacts[index].isFavorite ? `active` : ""
-                              } bg-gray-50 border-0 icon-36 rounded-3 d-flex align-items-center justify-content-center pe-auto"
+                              } bg-gray-50 border-0 icon-sm-32 icon-36 icon-md-36  rounded-3 d-flex align-items-center justify-content-center pe-auto"
                             >
                               <i
                                 class="fa-solid fa-star text-gray-400 fs-14px"
@@ -273,7 +331,7 @@ function UpdateContact(index) {
                              
                               class="emergency-action  ${
                                 contacts[index].isEmergency ? `active` : ""
-                              } bg-gray-50 border-0 icon-36 rounded-3 d-flex align-items-center justify-content-center"
+                              } bg-gray-50 border-0 icon-sm-32 icon-36 icon-md-36  rounded-3 d-flex align-items-center justify-content-center"
                             >
                               <i
                                 class="fa-solid ${
@@ -286,7 +344,7 @@ function UpdateContact(index) {
                             <a
                               onclick="Update(${index})"
                               title="Edit"
-                              class="edit-action bg-gray-50 border-0 icon-36 rounded-3 d-flex align-items-center justify-content-center"
+                              class="edit-action bg-gray-50 border-0 icon-sm-32 icon-36 icon-md-36  rounded-3 d-flex align-items-center justify-content-center"
                             >
                               <i
                                 class="fa-solid fa-pen text-gray-400 fs-14px"
@@ -295,7 +353,7 @@ function UpdateContact(index) {
                             <a
                               onclick="DeleteContact(${index})"
                               title="Delete"
-                              class="delete-action bg-gray-50 border-0 icon-36 rounded-3 d-flex align-items-center justify-content-center"
+                              class="delete-action bg-gray-50 border-0 icon-sm-32 icon-36 icon-md-36 rounded-3 d-flex align-items-center justify-content-center"
                             >
                               <i
                                 class="fa-solid fa-trash text-gray-400 fs-14px"
@@ -316,10 +374,10 @@ function UpdateFavoriteContacts(displayedContacts) {
       counter++;
       favoriteContacts += `
       <div
-                        class="contact-link d-flex align-items-center justify-content-between gap-2 bg-gray-50 p-2 border-2 border-gray-100 p-2"
+                        class="contact-link d-flex align-items-center justify-content-between gap-2 bg-gray-50 p-2 border-2 border-gray-100 p-2  w-100 flex-xl-fill w-xl-100"
                       >
                         <div class="d-flex gap-2">
-                          <div class="icon-56 rounded-3">
+                          <div class="icon-56 icon-sm-40  rounded-3">
                            ${
                              contact.avatarInput != null
                                ? `  <img
@@ -338,10 +396,10 @@ function UpdateFavoriteContacts(displayedContacts) {
                           </div>
 
                           <div>
-                            <h4 class="m-0 fs-14px text-gray-900">${
+                            <h4 class="m-0 fs-6 fs-sm-10px fs-xl-14px  text-gray-900">${
                               contact.fullName
                             }</h4>
-                            <p class="m-0 text-gray-500">${
+                            <p class="m-0 fs-14px fs-sm-10px fs-xl-12px text-gray-500">${
                               contact.telephone
                             }</p>
                           </div>
@@ -376,10 +434,10 @@ function UpdateEmergencyContacts(displayedContacts) {
       counter++;
       emergencyContacts += `
       <div
-                        class="contact-link d-flex align-items-center justify-content-between gap-2 bg-gray-50 p-2 border-2 border-gray-100 p-2"
+                        class="contact-link d-flex align-items-center justify-content-between gap-2 bg-gray-50 p-2 border-2 border-gray-100 p-2  w-100 flex-xl-fill w-xl-100"
                       >
                         <div class="d-flex gap-2">
-                          <div class="icon-56 rounded-3">
+                          <div class="icon-56 icon-sm-40  rounded-3">
                           ${
                             contact.avatarInput != null
                               ? `  <img
@@ -399,10 +457,10 @@ function UpdateEmergencyContacts(displayedContacts) {
                           </div>
 
                           <div>
-                            <h4 class="m-0 fs-14px text-gray-900">${
+                            <h4 class="m-0 fs-6 fs-sm-10px fs-xl-14px text-gray-900">${
                               contact.fullName
                             }</h4>
-                            <p class="m-0 text-gray-500">${
+                            <p class="m-0 fs-14px fs-sm-10px fs-xl-12px text-gray-500">${
                               contact.telephone
                             }</p>
                           </div>
@@ -430,4 +488,178 @@ function UpdateEmergencyContacts(displayedContacts) {
   emergencyContactsQuantity.innerHTML = counter;
 }
 
-function FindContact(input) {}
+function FindContact(value) {
+  var filteredArray = [];
+  contacts.forEach((contact) => {
+    if (
+      contact.fullName.toLowerCase().includes(value.toLowerCase()) ||
+      contact.telephone.toLowerCase().includes(value.toLowerCase()) ||
+      contact.email.toLowerCase().includes(value.toLowerCase())
+    ) {
+      filteredArray.push(contact);
+    }
+  });
+  DisplayContacts(filteredArray);
+}
+function ResetProfileImg() {
+  avatarImg.innerHTML = ` <i class="fa-solid fa-user fs-30px text-white"></i>`;
+}
+
+function UpdateProfileImg(input) {
+  avatarImg.innerHTML = `  <img
+                                class="rounded-circle object-fit-cover  "
+                                src="./images/${input.files[0].name}"
+                                alt=""
+                              />`;
+}
+
+function ShowMessage() {
+  Swal.fire({
+    title: editMode ? "Updated" : "Added!",
+    text: editMode
+      ? "Contact has been updated successfully."
+      : "Contact has been added successfully.",
+    icon: "success",
+    showConfirmButton: false,
+  });
+}
+
+function seedContacts() {
+  const groups = ["family", "friends", "work", "school", "other"];
+
+  const gradients = [
+    "linear-gradient(to bottom right, #60a5fa, #2563eb)", // blue
+    "linear-gradient(to bottom right, #4ade80, #16a34a)", // green
+    "linear-gradient(to bottom right, #c084fc, #7c3aed)", // purple
+    "linear-gradient(to bottom right, #fbbf24, #d97706)", // amber
+    "linear-gradient(to bottom right, #f472b6, #db2777)", // pink
+    "linear-gradient(to bottom right, #2dd4bf, #0f766e)", // teal
+    "linear-gradient(to bottom right, #818cf8, #4338ca)", // indigo
+    "linear-gradient(to bottom right, #f87171, #b91c1c)", // red
+    "linear-gradient(to bottom right, #22d3ee, #0e7490)", // cyan
+    "linear-gradient(to bottom right, #a78bfa, #6d28d9)", // violet
+  ];
+
+  contacts = [
+    {
+      avatarInput: null,
+      gradient: gradients[0],
+      fullName: "Ahmed Ali",
+      telephone: "+201001234561",
+      email: "ahmed.ali@example.com",
+      address: "Cairo, Egypt",
+      group: groups[0],
+      notes: "Brother",
+      isFavorite: true,
+      isEmergency: false,
+    },
+    {
+      avatarInput: null,
+      gradient: gradients[1],
+      fullName: "Mohamed Hassan",
+      telephone: "+201001234562",
+      email: "mohamed.hassan@example.com",
+      address: "Giza, Egypt",
+      group: groups[1],
+      notes: "College friend",
+      isFavorite: false,
+      isEmergency: false,
+    },
+    {
+      avatarInput: null,
+      gradient: gradients[2],
+      fullName: "Sara Mahmoud",
+      telephone: "+201001234563",
+      email: "sara.mahmoud@example.com",
+      address: "Alexandria, Egypt",
+      group: groups[2],
+      notes: "Project manager",
+      isFavorite: true,
+      isEmergency: true,
+    },
+    {
+      avatarInput: null,
+      gradient: gradients[3],
+      fullName: "Omar Adel",
+      telephone: "+201001234564",
+      email: "omar.adel@example.com",
+      address: "Mansoura, Egypt",
+      group: groups[3],
+      notes: "School friend",
+      isFavorite: false,
+      isEmergency: false,
+    },
+    {
+      avatarInput: null,
+      gradient: gradients[4],
+      fullName: "Nour Salah",
+      telephone: "+201001234565",
+      email: "nour.salah@example.com",
+      address: "Tanta, Egypt",
+      group: groups[4],
+      notes: "Other contact",
+      isFavorite: false,
+      isEmergency: true,
+    },
+    {
+      avatarInput: null,
+      gradient: gradients[5],
+      fullName: "Khaled Mostafa",
+      telephone: "+201001234566",
+      email: "khaled.mostafa@example.com",
+      address: "Ismailia, Egypt",
+      group: groups[Math.floor(Math.random() * groups.length)],
+      notes: "Team lead",
+      isFavorite: true,
+      isEmergency: false,
+    },
+    {
+      avatarInput: null,
+      gradient: gradients[6],
+      fullName: "Mona Fathy",
+      telephone: "+201001234567",
+      email: "mona.fathy@example.com",
+      address: "Zagazig, Egypt",
+      group: groups[Math.floor(Math.random() * groups.length)],
+      notes: "Best friend",
+      isFavorite: true,
+      isEmergency: false,
+    },
+    {
+      avatarInput: null,
+      gradient: gradients[7],
+      fullName: "Hossam Youssef",
+      telephone: "+201001234568",
+      email: "hossam.youssef@example.com",
+      address: "Asyut, Egypt",
+      group: groups[Math.floor(Math.random() * groups.length)],
+      notes: "Mechanic",
+      isFavorite: false,
+      isEmergency: true,
+    },
+    {
+      avatarInput: null,
+      gradient: gradients[8],
+      fullName: "Laila Samir",
+      telephone: "+201001234569",
+      email: "laila.samir@example.com",
+      address: "Fayoum, Egypt",
+      group: groups[Math.floor(Math.random() * groups.length)],
+      notes: "HR",
+      isFavorite: false,
+      isEmergency: false,
+    },
+    {
+      avatarInput: null,
+      gradient: gradients[9],
+      fullName: "Youssef Emad",
+      telephone: "+201001234570",
+      email: "youssef.emad@example.com",
+      address: "Suez, Egypt",
+      group: groups[Math.floor(Math.random() * groups.length)],
+      notes: "Gym buddy",
+      isFavorite: true,
+      isEmergency: false,
+    },
+  ];
+}
