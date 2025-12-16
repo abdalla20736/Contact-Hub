@@ -119,7 +119,8 @@ function UpdateMainContacts(displayedContacts) {
 
   if (displayedContacts.length > 0) {
     for (let index = 0; index < displayedContacts.length; index++) {
-      mainContacts += UpdateContact(index);
+      console.log(displayedContacts[index].fullName);
+      mainContacts += UpdateContact(displayedContacts, index);
     }
   } else {
     mainContacts = `                <div id="contact-info" class="text-center">
@@ -136,12 +137,12 @@ function UpdateMainContacts(displayedContacts) {
                     </p>
                   </div>`;
   }
-  contactsHeaderQuantity.innerHTML = displayedContacts.length;
-  totalContactsQuantity.innerHTML = displayedContacts.length;
+  contactsHeaderQuantity.innerHTML = contacts.length;
+  totalContactsQuantity.innerHTML = contacts.length;
   contactsViewPort.innerHTML = mainContacts;
 }
 
-function UpdateContact(index) {
+function UpdateContact(displayedContacts, index) {
   var contact = `
                 <div class="col-sm-6 align-items-center   ">
                       <div class="contact-card  h-100  border border-gray-100 border-1">
@@ -149,7 +150,7 @@ function UpdateContact(index) {
                           <div class="d-flex gap-3">
                             <div class="position-relative icon-56 rounded-3">
                             ${
-                              contacts[index].isFavorite
+                              displayedContacts[index].isFavorite
                                 ? `  <div
                                 id="favorite-icon-img"
                                 class="favorite-icon icon-20 position-absolute bg-amber-400 d-flex align-items-center justify-content-center rounded-circle"
@@ -161,7 +162,7 @@ function UpdateContact(index) {
                                 : ""
                             }
                             ${
-                              contacts[index].isEmergency
+                              displayedContacts[index].isEmergency
                                 ? ` <div
                                 id="emergency-icon-img"
                                 class="emergency-icon icon-20 position-absolute bg-rose-500 d-flex align-items-center justify-content-center rounded-circle"
@@ -173,19 +174,21 @@ function UpdateContact(index) {
                                 : ""
                             }
                              ${
-                               contacts[index].avatarInput != null
+                               displayedContacts[index].avatarInput != null
                                  ? `  <img
                                 class="rounded-3"
-                                src="./images/${contacts[index].avatarInput}"
+                                src="./images/${displayedContacts[index].avatarInput}"
                                 alt=""
                               />`
                                  : `<div
                                 class="gradient-div text-white d-flex align-items-center justify-content-center h-100 w-100 rounded-3"
                                  style="--avatar-gradient: ${
-                                   contacts[index].gradient
+                                   displayedContacts[index].gradient
                                  }"
                               >
-                                ${contacts[index].fullName[0].toUpperCase()}
+                                ${displayedContacts[
+                                  index
+                                ].fullName[0].toUpperCase()}
                               </div>`
                              }  
                             
@@ -193,7 +196,7 @@ function UpdateContact(index) {
 
                             <div>
                               <h3  class="fs-6 fw-600 ">${
-                                contacts[index].fullName
+                                displayedContacts[index].fullName
                               }</h3>
                               <div class="d-flex gap-2">
                                 <div
@@ -204,13 +207,13 @@ function UpdateContact(index) {
                                   ></i>
                                 </div>
                                 <p class="m-0 text-gray-500 fs-14px">${
-                                  contacts[index].telephone
+                                  displayedContacts[index].telephone
                                 }</p>
                               </div>
                             </div>
                           </div>
                           ${
-                            contacts[index].email != ""
+                            displayedContacts[index].email != ""
                               ? `<div class="d-flex gap-2 align-items-center mt-2">
                             <div
                               class="icon-28 bg-violet-100 rounded-3 d-flex align-items-center justify-content-center"
@@ -220,7 +223,7 @@ function UpdateContact(index) {
                               ></i>
                             </div>
                             <p class="m-0 text-gray-600 fs-14px">
-                              ${contacts[index].email}
+                              ${displayedContacts[index].email}
                             </p>
                           </div>`
                               : ""
@@ -228,7 +231,7 @@ function UpdateContact(index) {
            
                         
                           ${
-                            contacts[index].address != ""
+                            displayedContacts[index].address != ""
                               ? `   <div
                             class="d-flex gap-2 align-items-center rounded-3 mt-2"
                           ><div
@@ -239,7 +242,7 @@ function UpdateContact(index) {
                               ></i>
                             </div>
                                      <p class="m-0 text-gray-600 fs-14px">
-                              ${contacts[index].address}
+                              ${displayedContacts[index].address}
                             </p>
                           </div>`
                               : ""
@@ -248,23 +251,23 @@ function UpdateContact(index) {
                     
                           <div>
                           ${
-                            contacts[index].group == "family"
+                            displayedContacts[index].group == "family"
                               ? `   <div class="badge bg-blue-100 text-blue-700">
                               Family
                             </div>`
-                              : contacts[index].group == "friends"
+                              : displayedContacts[index].group == "friends"
                               ? `   <div class="badge bg-green-100 text-green-700">
                               Friends
                             </div>`
-                              : contacts[index].group == "work"
+                              : displayedContacts[index].group == "work"
                               ? `   <div class="badge bg-purple-100 text-purple-700">
                               Work
                             </div>`
-                              : contacts[index].group == "school"
+                              : displayedContacts[index].group == "school"
                               ? `   <div class="badge bg-amber-100 text-amber-700">
                               School
                             </div>`
-                              : contacts[index].group == "other"
+                              : displayedContacts[index].group == "other"
                               ? `   <div class="badge bg-gray-100 text-gray-700">
                               Other
                             </div>`
@@ -272,7 +275,7 @@ function UpdateContact(index) {
                           }
                      
                             ${
-                              contacts[index].isEmergency
+                              displayedContacts[index].isEmergency
                                 ? ` <div
                               class="emergency-badge badge bg-rose-50 text-rose-500"
                             >
@@ -290,7 +293,7 @@ function UpdateContact(index) {
                           <div class="d-flex gap-2">
                             <a
                               title="Call"
-                              href="tel:${contacts[index].telephone}"
+                              href="tel:${displayedContacts[index].telephone}"
                               class="call-action bg-emerald-50 border-0 icon-sm-32 icon-36 icon-md-36  rounded-3 d-flex align-items-center justify-content-center"
                             >
                               <i
@@ -298,11 +301,11 @@ function UpdateContact(index) {
                               ></i>
                             </a>
                             ${
-                              contacts[index].email != ""
+                              displayedContacts[index].email != ""
                                 ? `
                             <a
                               title="Email"
-                              href="mailto:${contacts[index].email}"
+                              href="mailto:${displayedContacts[index].email}"
                               class="email-action bg-violet-50 border-0 icon-sm-32 icon-36 icon-md-36  rounded-3 d-flex align-items-center justify-content-center"
                             >
                               <i
@@ -317,7 +320,9 @@ function UpdateContact(index) {
                               onclick="ToggleFavorite(this,${index})"
                               title="Favorite"
                               class="favorite-action  ${
-                                contacts[index].isFavorite ? `active` : ""
+                                displayedContacts[index].isFavorite
+                                  ? `active`
+                                  : ""
                               } bg-gray-50 border-0 icon-sm-32 icon-36 icon-md-36  rounded-3 d-flex align-items-center justify-content-center pe-auto"
                             >
                               <i
@@ -330,12 +335,14 @@ function UpdateContact(index) {
                               title="Emergency"
                              
                               class="emergency-action  ${
-                                contacts[index].isEmergency ? `active` : ""
+                                displayedContacts[index].isEmergency
+                                  ? `active`
+                                  : ""
                               } bg-gray-50 border-0 icon-sm-32 icon-36 icon-md-36  rounded-3 d-flex align-items-center justify-content-center"
                             >
                               <i
                                 class="fa-solid ${
-                                  contacts[index].isEmergency
+                                  displayedContacts[index].isEmergency
                                     ? `fa-heart-pulse`
                                     : "fa-heart"
                                 } text-gray-400 fs-14px"
@@ -489,17 +496,20 @@ function UpdateEmergencyContacts(displayedContacts) {
 }
 
 function FindContact(value) {
-  var filteredArray = [];
+  var filteredContacts = [];
+  console.log(value);
   contacts.forEach((contact) => {
     if (
       contact.fullName.toLowerCase().includes(value.toLowerCase()) ||
       contact.telephone.toLowerCase().includes(value.toLowerCase()) ||
       contact.email.toLowerCase().includes(value.toLowerCase())
     ) {
-      filteredArray.push(contact);
+      console.log(contact.fullName);
+      filteredContacts.push(contact);
     }
   });
-  DisplayContacts(filteredArray);
+  if (filteredContacts.length === 0) UpdateMainContacts(contacts);
+  UpdateMainContacts(filteredContacts);
 }
 function ResetProfileImg() {
   avatarImg.innerHTML = ` <i class="fa-solid fa-user fs-30px text-white"></i>`;
@@ -521,6 +531,7 @@ function ShowMessage() {
       : "Contact has been added successfully.",
     icon: "success",
     showConfirmButton: false,
+    timer: 1000,
   });
 }
 
