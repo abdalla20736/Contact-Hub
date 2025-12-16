@@ -110,6 +110,8 @@ function DeleteContact(index) {
         title: "Deleted!",
         text: "Contact has been deleted.",
         icon: "success",
+        showConfirmButton: false,
+        timer: 1000,
       });
     }
   });
