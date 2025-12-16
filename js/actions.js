@@ -1,0 +1,26 @@
+function RegisterEvents() {
+  openFormBtn.addEventListener("click", OpenForm);
+  closeFormBtn.addEventListener("click", CloseForm);
+  cancelFormBtn.addEventListener("click", CloseForm);
+  saveContactBtn.addEventListener("click", SaveContact);
+  searchInput.addEventListener("input", FindContact);
+  inputs[1].addEventListener("input", (e) => ValidateInputs(e.target, 0));
+  inputs[2].addEventListener("input", (e) => ValidateInputs(e.target, 1));
+  inputs[3].addEventListener("input", (e) => ValidateInputs(e.target, 2));
+}
+
+function OpenForm() {
+  addContactForm.classList.add("opacity-100");
+  addContactForm.classList.remove("visually-hidden");
+}
+
+function CloseForm(input) {
+  addContactForm.classList.remove("opacity-100");
+  addContactForm.addEventListener(
+    "transitionend",
+    function () {
+      addContactForm.classList.add("visually-hidden");
+    },
+    { once: true }
+  );
+}

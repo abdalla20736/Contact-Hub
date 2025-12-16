@@ -1,0 +1,434 @@
+:root {
+  --default-font-family: "Inter";
+  --default-main-color: #cbfe1c;
+  --text-dark: #0b0e13;
+  --body-bg: #f8fafc;
+  --primary: #ff6900;
+  --bg-primary: #ff6900;
+  --bg-secondary: #ffffff;
+  --text-primary: #ff6900;
+  --profile-border-image-color: #fdba74;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+* {
+  font-family: var(--default-font-family), sans-serif;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+a {
+  text-decoration: none;
+  cursor: pointer;
+}
+
+img {
+  width: 100%;
+  height: 100%;
+}
+body {
+  background-color: var(--body-bg);
+}
+
+.gradient-div {
+  background: var(--avatar-gradient);
+}
+.navbar {
+  background-color: #fafbfe;
+  border-bottom: 1px solid #e5e7eb80;
+  .nav-logo {
+    background: linear-gradient(to bottom right, #7c3aed, #4f46e5);
+  }
+  .navbar-toggler:focus {
+    box-shadow: none;
+  }
+
+  .navbar-nav {
+    .action-btn {
+      transition: all 0.3s;
+      &:hover {
+        background-color: #f3f4f6;
+        i {
+          color: #374151;
+        }
+      }
+    }
+    .nav-item {
+      button {
+        i {
+          transition: all 0.2s;
+        }
+      }
+
+      .add-btn {
+        i {
+          font-size: 10px;
+        }
+        transition: all 0.3s;
+        background: linear-gradient(to right, #7c3aed, #4f46e5);
+        padding: 10px 16px;
+        border-radius: 10px;
+        &:hover {
+          transform: translateY(-3px);
+          box-shadow: 0 8px 15px -3px color-mix(in srgb, rgb(139 92 246) 50%, #fff
+                50%);
+        }
+      }
+    }
+  }
+}
+input {
+  border-radius: 25px;
+}
+input:focus,
+select:focus,
+textarea:focus {
+  background-color: white;
+  border-color: oklch(60.6% 0.25 292.717) !important;
+  box-shadow: 0px 1px 10px 4px
+    color-mix(in oklab, oklch(60.6% 0.25 292.717) 20%, transparent) !important;
+}
+
+#contacts {
+  padding: 24px 16px;
+  .counters {
+    .counter-card {
+      box-shadow: 0 1px 3px 0 #0000001a, 0 1px 2px -1px #0000001a;
+      transition: all 0.3s;
+      &:hover {
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+          0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      }
+    }
+    .total {
+      .icon {
+        background: linear-gradient(to bottom right, #3b82f6, #155dfc);
+      }
+    }
+    .favorites {
+      .icon {
+        background: linear-gradient(
+          to bottom right,
+          oklch(82.8% 0.189 84.429),
+          oklch(70.5% 0.213 47.604)
+        );
+      }
+    }
+    .emergency {
+      .icon {
+        background: linear-gradient(
+          to bottom right,
+          oklch(64.5% 0.246 16.439),
+          oklch(57.7% 0.245 27.325)
+        );
+      }
+    }
+  }
+  .all-contacts {
+    #search-contact {
+      padding: 14px 16px 14px 44px;
+      border-radius: 12px;
+      &::placeholder {
+        color: #99a1af;
+      }
+    }
+
+    .contact-card {
+      transition: all 0.3s;
+      box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+      border-radius: 25px;
+      &:hover {
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+          0 4px 6px -2px rgba(0, 0, 0, 0.05);
+      }
+      .contact-card-info {
+        padding: 16px 16px 12px;
+        .badge {
+          margin-top: 12px;
+        }
+        .favorite-icon {
+          top: -5px;
+          right: -5px;
+          border: solid 2px white;
+        }
+        .emergency-icon {
+          bottom: -5px;
+          right: -5px;
+          border: solid 2px white;
+        }
+      }
+
+      .contact-actions {
+        background-color: #fafbfc;
+        padding: 10px 16px;
+        .call-action {
+          transition: all 0.3s;
+          &:hover {
+            background-color: #d1fae5;
+          }
+        }
+        .email-action {
+          transition: all 0.3s;
+          i {
+            transition: all 0.3s;
+          }
+          &:hover {
+            background-color: #ede9fe;
+            i {
+              color: #fbbf24;
+            }
+          }
+        }
+        .favorite-action {
+          transition: all 0.3s;
+          i {
+            transition: all 0.3s;
+          }
+          &:hover {
+            background-color: #f3f4f6;
+            i {
+              color: #fbbf24;
+            }
+          }
+        }
+        .favorite-action.active {
+          transition: all 0.3s;
+          background-color: #fffbeb;
+          i {
+            color: #fbbf24;
+          }
+          &:hover {
+            background-color: #fef3c7;
+          }
+        }
+        .emergency-action {
+          transition: all 0.3s;
+          i {
+            transition: all 0.3s;
+          }
+          &:hover {
+            background-color: #f3f4f6;
+            i {
+              color: #f43f5e;
+            }
+          }
+        }
+        .emergency-action.active {
+          transition: all 0.3s;
+          background-color: #fff1f2;
+          i {
+            color: #f43f5e;
+          }
+          &:hover {
+            background-color: #ffe4e6;
+          }
+        }
+        .edit-action {
+          transition: all 0.3s;
+          i {
+            transition: all 0.3s;
+          }
+          &:hover {
+            background-color: #eef2ff;
+            i {
+              color: #4f46e5;
+            }
+          }
+        }
+        .delete-action {
+          transition: all 0.3s;
+          i {
+            transition: all 0.3s;
+          }
+          &:hover {
+            background-color: #fff1f2;
+            i {
+              color: #be123c;
+            }
+          }
+        }
+      }
+    }
+    #contact-info {
+      padding-block: 80px;
+      .no-contacts {
+        width: 80px;
+        height: 80px;
+      }
+    }
+    .contacts-type {
+      .title {
+        padding: 14px 16px;
+        p:last-child {
+          font-size: 10px;
+        }
+      }
+      .contacts {
+        padding: 12px;
+        p {
+          padding-block: 24px;
+        }
+      }
+      .favorite-contacts {
+        box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+        border-radius: 20px;
+        .title {
+          background: linear-gradient(
+            to right,
+            oklch(98.7% 0.022 95.277),
+            oklch(98% 0.016 73.684)
+          );
+        }
+        .contact-link {
+          min-width: 0;
+          max-width: 100%;
+          transition: all 0.3s;
+          border-radius: 15px;
+          &:hover {
+            background-color: #fffbeb !important;
+            border-color: #fcd34d !important;
+          }
+          a {
+            transition: all 0.3s;
+            i {
+              transition: all 0.3s;
+            }
+            &:hover {
+              i {
+                color: white;
+              }
+              background-color: #10b981;
+            }
+          }
+        }
+        .icon {
+          background: linear-gradient(
+            to bottom right,
+            oklch(82.8% 0.189 84.429),
+            oklch(70.5% 0.213 47.604)
+          );
+        }
+      }
+
+      .emergency-contacts {
+        box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+        border-radius: 20px;
+        .title {
+          background: linear-gradient(
+            to right,
+            oklch(96.9% 0.015 12.422),
+            oklch(97.1% 0.013 17.38)
+          );
+        }
+        .contact-link {
+          transition: all 0.3s;
+          border-radius: 15px;
+          &:hover {
+            background-color: #fff1f2 !important;
+            border-color: #fecdd3 !important;
+          }
+          a {
+            transition: all 0.3s;
+            i {
+              transition: all 0.3s;
+            }
+            &:hover {
+              i {
+                color: white;
+              }
+              background-color: #f43f5e;
+            }
+          }
+        }
+        .icon {
+          background: linear-gradient(
+            to bottom right,
+            oklch(64.5% 0.246 16.439),
+            oklch(57.7% 0.245 27.325)
+          );
+        }
+      }
+    }
+  }
+}
+
+#add-contact-form {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(5px);
+  height: 100%;
+  width: 100%;
+  z-index: 999;
+  opacity: 0;
+  transition: opacity 0.5s;
+
+  & > div {
+    width: 512px;
+    height: 750px;
+    scrollbar-width: none;
+    border-radius: 20px;
+  }
+  form {
+    .change-avatar-btn {
+      border: none;
+      transition: all 0.3s;
+      &:hover {
+        background-color: #e5e7eb !important;
+      }
+    }
+    .avatar {
+      width: 96px;
+      height: 96px;
+      background: linear-gradient(
+        to bottom right,
+        oklch(70.7% 0.165 254.624),
+        oklch(54.6% 0.245 262.881)
+      );
+    }
+    input,
+    select,
+    textarea {
+      border-radius: 15px;
+      padding: 12px 16px;
+    }
+    textarea {
+      resize: none;
+    }
+    input[type="checkbox"] {
+      width: 20px;
+      height: 20px;
+    }
+    .cancel-btn,
+    .save-btn {
+      border-radius: 15px;
+      padding: 12px 20px;
+    }
+    .cancel-btn {
+      transition: all 0.3s;
+      &:hover {
+        background-color: #e5e7eb !important;
+      }
+    }
+    .save-btn {
+      transition: all 0.3s;
+
+      &:hover {
+        box-shadow: 0px 5px 12px 4px
+          color-mix(in oklab, oklch(60.6% 0.25 292.717) 20%, transparent) !important;
+      }
+      background: linear-gradient(
+        to right,
+        oklch(54.1% 0.281 293.009),
+        oklch(51.1% 0.262 276.966)
+      );
+    }
+  }
+}
