@@ -17,6 +17,7 @@ const favoritesContactsLinks = document.getElementById("favorites-links");
 const emergencyContactsLinks = document.getElementById("emergency-links");
 const contactGradient = document.querySelector(".contact-gradient");
 const Form = addContactForm.querySelector("form");
+const formTitle = addContactForm.querySelector(".form-title");
 
 let contacts;
 let validName = true;
@@ -28,7 +29,7 @@ let currentContactIndex;
 
 RegisterEvents();
 LoadContactsFromLocalStorage();
-seedContacts();
+
 DisplayContacts(contacts);
 
 function RandomGradient() {
@@ -381,7 +382,7 @@ function UpdateFavoriteContacts(displayedContacts) {
       counter++;
       favoriteContacts += `
       <div
-                        class="contact-link d-flex align-items-center justify-content-between gap-2 bg-gray-50 p-2 border-2 border-gray-100 p-2  w-100 flex-xl-fill w-xl-100"
+                        class="contact-link d-flex align-items-center justify-content-between gap-2 bg-gray-50 p-2 border-2 border-gray-100 p-2 w-100  "
                       >
                         <div class="d-flex gap-2">
                           <div class="icon-56 icon-sm-40  rounded-3">
@@ -441,7 +442,7 @@ function UpdateEmergencyContacts(displayedContacts) {
       counter++;
       emergencyContacts += `
       <div
-                        class="contact-link d-flex align-items-center justify-content-between gap-2 bg-gray-50 p-2 border-2 border-gray-100 p-2  w-100 flex-xl-fill w-xl-100"
+                        class="contact-link d-flex align-items-center justify-content-between gap-2 bg-gray-50 p-2 border-2 border-gray-100 p-2 w-100"
                       >
                         <div class="d-flex gap-2">
                           <div class="icon-56 icon-sm-40  rounded-3">

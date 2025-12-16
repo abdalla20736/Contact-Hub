@@ -13,6 +13,7 @@ function RegisterEvents() {
 function OpenForm() {
   addContactForm.classList.add("opacity-100");
   addContactForm.classList.remove("visually-hidden");
+  formTitle.innerHTML = "Add New Contact";
   ResetProfileImg();
   ClearForm();
 }

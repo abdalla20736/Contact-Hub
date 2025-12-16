@@ -19,4 +19,7 @@
 }
 
 @media screen and (min-width: 1200px) {
+  .contact-link {
+    width: 100% !important;
+  }
 }

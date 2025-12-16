@@ -8,7 +8,7 @@ function Update(index) {
   editMode = true;
   currentContactIndex = index;
   OpenForm();
-
+  formTitle.innerHTML = "Edit Contact";
   avatarImg.innerHTML =
     contacts[index].avatarInput != null
       ? `  <img
