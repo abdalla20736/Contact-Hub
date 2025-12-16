@@ -286,6 +286,7 @@ textarea:focus {
           );
         }
         .contact-link {
+          cursor: pointer;
           min-width: 0;
           max-width: 100%;
           transition: all 0.3s;
@@ -293,17 +294,17 @@ textarea:focus {
           &:hover {
             background-color: #fffbeb !important;
             border-color: #fcd34d !important;
+            a {
+              i {
+                color: white;
+              }
+              background-color: #10b981;
+            }
           }
           a {
             transition: all 0.3s;
             i {
               transition: all 0.3s;
-            }
-            &:hover {
-              i {
-                color: white;
-              }
-              background-color: #10b981;
             }
           }
         }
@@ -327,22 +328,23 @@ textarea:focus {
           );
         }
         .contact-link {
+          cursor: pointer;
           transition: all 0.3s;
           border-radius: 15px;
           &:hover {
             background-color: #fff1f2 !important;
             border-color: #fecdd3 !important;
+            a {
+              i {
+                color: white;
+              }
+              background-color: #f43f5e;
+            }
           }
           a {
             transition: all 0.3s;
             i {
               transition: all 0.3s;
-            }
-            &:hover {
-              i {
-                color: white;
-              }
-              background-color: #f43f5e;
             }
           }
         }

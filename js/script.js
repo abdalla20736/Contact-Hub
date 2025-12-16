@@ -327,7 +327,11 @@ function UpdateContact(displayedContacts, index) {
                               } bg-gray-50 border-0 icon-sm-32 icon-36 icon-md-36  rounded-3 d-flex align-items-center justify-content-center pe-auto"
                             >
                               <i
-                                class="fa-solid fa-star text-gray-400 fs-14px"
+                                class=" ${
+                                  displayedContacts[index].isFavorite
+                                    ? `fa-solid`
+                                    : `fa-regular`
+                                } fa-star text-gray-400 fs-14px"
                               ></i>
                             </a>
                             <a
@@ -342,10 +346,10 @@ function UpdateContact(displayedContacts, index) {
                               } bg-gray-50 border-0 icon-sm-32 icon-36 icon-md-36  rounded-3 d-flex align-items-center justify-content-center"
                             >
                               <i
-                                class="fa-solid ${
+                                class=" ${
                                   displayedContacts[index].isEmergency
-                                    ? `fa-heart-pulse`
-                                    : "fa-heart"
+                                    ? `fa-solid fa-heart-pulse`
+                                    : "fa-regular fa-heart"
                                 } text-gray-400 fs-14px"
                               ></i>
                             </a>
@@ -476,10 +480,10 @@ function UpdateEmergencyContacts(displayedContacts) {
                         <div>
                           <a
                             href="tel:${contact.telephone}"
-                            class="icon-24 icon-xl-32 rounded-3 d-flex align-items-center justify-content-center bg-emerald-100"
+                            class="icon-24 icon-xl-32 rounded-3 d-flex align-items-center justify-content-center bg-rose-100"
                           >
                             <i
-                              class="fa-solid fa-phone text-emerald-600 fs-8px fs-xl-12px"
+                              class="fa-solid fa-phone text-rose-600 fs-8px fs-xl-12px"
                             ></i>
                           </a>
                         </div>
