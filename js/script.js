@@ -29,7 +29,7 @@ let currentContactIndex;
 
 RegisterEvents();
 LoadContactsFromLocalStorage();
-
+seedContacts();
 DisplayContacts(contacts);
 
 function RandomGradient() {
