@@ -30,10 +30,10 @@ The application focuses on simplicity, usability, and clean UI while running ful
 ## 🖼 Screenshots
 
 ### Contacts List
-![Contacts List](./assets/screenshots/contacts-hub.png)
+![Contacts List](./screenshots/contacts-hub.png)
 
 ### Add Contact Form
-![Add Contact](./assets/screenshots/add-contact.png)
+![Add Contact](./screenshots/add-contact.png)
 
 ---
 
