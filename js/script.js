@@ -32,22 +32,6 @@ LoadContactsFromLocalStorage();
 
 DisplayContacts(contacts);
 
-function RandomGradient() {
-  let r = Math.floor(80 + Math.random() * 140);
-  let g = Math.floor(80 + Math.random() * 140);
-  let b = Math.floor(80 + Math.random() * 140);
-
-  const color1 = `rgb(${r}, ${g}, ${b})`;
-
-  const color2 = `rgb(
-    ${Math.max(0, r - 60)},
-    ${Math.max(0, g - 60)},
-    ${Math.max(0, b - 60)}
-  )`;
-
-  return `linear-gradient(to bottom right, ${color1}, ${color2})`;
-}
-
 function SaveContact() {
   var imageName;
   if (inputs[0].files.length > 0) {
@@ -73,6 +57,10 @@ function SaveContact() {
 
   if (ValidateForm(contact)) {
     if (editMode) {
+      contact.avatarInput =
+        contacts[currentContactIndex].avatarInput != null
+          ? contacts[currentContactIndex].avatarInput
+          : contact.avatarInput;
       contacts[currentContactIndex] = contact;
     } else {
       contacts.push(contact);

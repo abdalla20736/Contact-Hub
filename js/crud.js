@@ -26,7 +26,6 @@ function Update(index) {
                               </div>`;
 
   inputs[1].value = contacts[index].fullName;
-
   inputs[2].value = contacts[index].telephone;
   inputs[3].value = contacts[index].email;
   inputs[4].value = contacts[index].address;
