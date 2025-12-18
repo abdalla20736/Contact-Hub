@@ -18,7 +18,7 @@ function OpenForm() {
   ClearForm();
 }
 
-function CloseForm(input) {
+function CloseForm() {
   editMode = false;
   currentContactIndex = undefined;
 

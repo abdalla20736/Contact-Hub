@@ -16,7 +16,7 @@ const emergencyContactsQuantity = document.getElementById("emergency-contacts");
 const favoritesContactsLinks = document.getElementById("favorites-links");
 const emergencyContactsLinks = document.getElementById("emergency-links");
 const contactGradient = document.querySelector(".contact-gradient");
-const Form = addContactForm.querySelector("form");
+const form = addContactForm.querySelector("form");
 const formTitle = addContactForm.querySelector(".form-title");
 
 let contacts;
@@ -42,6 +42,7 @@ function SaveContact() {
     contacts[currentContactIndex] === undefined
       ? RandomGradient()
       : contacts[currentContactIndex].gradient;
+      
   var contact = {
     avatarInput: imageName,
     gradient: existGradient,
@@ -73,7 +74,7 @@ function SaveContact() {
 }
 
 function ClearForm() {
-  Form.reset();
+  form.reset();
 }
 
 function DisplayContacts(contacts) {
@@ -308,7 +309,7 @@ function UpdateContact(displayedContacts, index) {
                           </div>
                           <div class=" d-flex gap-2">
                             <a
-                              onclick="ToggleFavorite(this,${index})"
+                              onclick="ToggleFavorite(${index})"
                               title="Favorite"
                               class="favorite-action  ${
                                 displayedContacts[index].isFavorite
@@ -326,7 +327,7 @@ function UpdateContact(displayedContacts, index) {
                             </a>
                             <a
                            
-                              onclick="ToggleEmergency(this,${index})"
+                              onclick="ToggleEmergency(${index})"
                               title="Emergency"
                              
                               class="emergency-action  ${
