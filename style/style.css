@@ -436,3 +436,28 @@ textarea:focus {
     }
   }
 }
+
+.family {
+  color: #1d4ed8;
+  background-color: #dbeafe;
+}
+
+.friends {
+  color: #15803d;
+  background-color: #dcfce7;
+}
+
+.work {
+  color: #6b21a8;
+  background-color: #f3e8ff;
+}
+
+.school {
+  color: #b45309;
+  background-color: #fef3c7;
+}
+
+.other {
+  color: #374151;
+  background-color: #f3f4f6;
+}

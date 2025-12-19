@@ -42,7 +42,7 @@ function SaveContact() {
     contacts[currentContactIndex] === undefined
       ? RandomGradient()
       : contacts[currentContactIndex].gradient;
-      
+
   var contact = {
     avatarInput: imageName,
     gradient: existGradient,
@@ -242,29 +242,9 @@ function UpdateContact(displayedContacts, index) {
                             
                     
                           <div>
-                          ${
-                            displayedContacts[index].group == "family"
-                              ? `   <div class="badge bg-blue-100 text-blue-700">
-                              Family
-                            </div>`
-                              : displayedContacts[index].group == "friends"
-                              ? `   <div class="badge bg-green-100 text-green-700">
-                              Friends
-                            </div>`
-                              : displayedContacts[index].group == "work"
-                              ? `   <div class="badge bg-purple-100 text-purple-700">
-                              Work
-                            </div>`
-                              : displayedContacts[index].group == "school"
-                              ? `   <div class="badge bg-amber-100 text-amber-700">
-                              School
-                            </div>`
-                              : displayedContacts[index].group == "other"
-                              ? `   <div class="badge bg-gray-100 text-gray-700">
-                              Other
-                            </div>`
-                              : ""
-                          }
+                          ${`<div class="badge text-capitalize ${displayedContacts[index].group}">
+                              ${displayedContacts[index].group}
+                            </div>`}
                      
                             ${
                               displayedContacts[index].isEmergency
